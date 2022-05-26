@@ -1,0 +1,59 @@
+config:
+  target: "{{ $processEnvironment.AWS_API_GW_URL }}"
+  phases:
+    - name: Warm up
+      duration: 60
+      arrivalRate: 1
+    - name: Spike1
+      duration: 120
+      arrivalRate: 30
+    - name: Drop1
+      duration: 240
+      arrivalRate: 1
+    - name: Spike2
+      duration: 120
+      arrivalRate: 40
+    - name: Drop2
+      duration: 240
+      arrivalRate: 1
+    - name: Spike3
+      duration: 120
+      arrivalRate: 50
+    - name: Drop3
+      duration: 240
+      arrivalRate: 1
+    - name: Spike4
+      duration: 120
+      arrivalRate: 120
+    - name: Drop4
+      duration: 240
+      arrivalRate: 1
+    - name: Spike5
+      duration: 120
+      arrivalRate: 120
+    - name: Drop5
+      duration: 240
+      arrivalRate: 1
+    - name: Spike6
+      duration: 120
+      arrivalRate: 120
+    - name: Drop6
+      duration: 240
+      arrivalRate: 1
+    - name: Spike7
+      duration: 120
+      arrivalRate: 120
+    - name: Drop7
+      duration: 240
+      arrivalRate: 1
+scenarios:
+  - name: "Get Custom Test endpoint"
+    weight: 1
+    flow:
+      - get:
+          url: "/standard"
+  - name: "Get Standard Test endpoint"
+    weight: 1
+    flow:
+      - get:
+          url: "/custom"

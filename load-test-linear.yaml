@@ -1,0 +1,27 @@
+config:
+  target: "{{ $processEnvironment.AWS_API_GW_URL }}"
+  phases:
+    - name: Warm up
+      duration: 60
+      arrivalRate: 1
+    - name: Ramp up load
+      duration: 600
+      arrivalRate: 1
+      rampTo: 75
+    - name: Sustained load
+      duration: 600
+      arrivalRate: 75
+    - name: Cool down
+      duration: 120
+      arrivalRate: 1
+scenarios:
+  - name: "Get Custom Test endpoint"
+    weight: 1
+    flow:
+      - get:
+          url: "/standard"
+  - name: "Get Standard Test endpoint"
+    weight: 1
+    flow:
+      - get:
+          url: "/custom"
