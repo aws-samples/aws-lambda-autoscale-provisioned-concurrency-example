@@ -16,37 +16,36 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {APIGatewayProxyResult} from "aws-lambda"
+import { APIGatewayProxyResult } from 'aws-lambda'
 
-const workTime = parseInt(process.env.WORKING_TIME_MILLIS || "20")
-const coldStartTime = parseInt(process.env.COLD_START_TIME_MILLIS || "200")
+const workTime = parseInt(process.env.WORKING_TIME_MILLIS || '20')
+const coldStartTime = parseInt(process.env.COLD_START_TIME_MILLIS || '200')
 let coldStart = true
 
 /**
  * Simulates the initialisation phase taking @coldStartTime ms
  */
-async function init() {
-    console.log(`Setting cold start time: ${coldStartTime}`);
-    console.log('Init started');
-    await new Promise(f => {
-        setTimeout(f, coldStartTime)
-    })
-    console.log('Init ended');
-    return false
+async function init () {
+  console.log(`Setting cold start time: ${coldStartTime}`)
+  console.log('Init started')
+  await new Promise(resolve => {
+    setTimeout(resolve, coldStartTime)
+  })
+  console.log('Init ended')
+  return false
 }
 
 /**
  * Simulates function that is working for @workTime ms and have a one time initialization taking @coldStartTime ms
  */
 export const handler = async (): Promise<APIGatewayProxyResult> => {
-    if (coldStart)
-        coldStart = await init()
+  if (coldStart) { coldStart = await init() }
 
-    console.log(`Setting working time: ${workTime}`);
-    console.log('Execution started');
-    await new Promise(f => {
-        setTimeout(f, workTime)
-    })
-    console.log('Execution ended');
-    return {body: "OK", statusCode: 200}
+  console.log(`Setting working time: ${workTime}`)
+  console.log('Execution started')
+  await new Promise(resolve => {
+    setTimeout(resolve, workTime)
+  })
+  console.log('Execution ended')
+  return { body: 'OK', statusCode: 200 }
 }

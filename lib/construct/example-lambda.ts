@@ -16,10 +16,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {Construct} from "constructs";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import {IVersion} from "aws-cdk-lib/aws-lambda";
-import {NodejsFunction} from "aws-cdk-lib/aws-lambda-nodejs";
+import { Construct } from 'constructs'
+import * as lambda from 'aws-cdk-lib/aws-lambda'
+import { IVersion } from 'aws-cdk-lib/aws-lambda'
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
 
 export interface ExampleLambdaProps {
     /**
@@ -36,26 +36,26 @@ export interface ExampleLambdaProps {
  * Example lambda function which simulates working time and cold start time according to set parameters
  */
 export class ExampleLambda extends Construct {
-    readonly handler: IVersion
+  readonly handler: IVersion
 
-    constructor(scope: Construct, id: string, props: ExampleLambdaProps) {
-        super(scope, id);
+  constructor (scope: Construct, id: string, props: ExampleLambdaProps) {
+    super(scope, id)
 
-        const workingTimeInMS = props.workingTimeInMS || 10
-        const coldStartTimeInMS = props.coldStartTimeInMS || 500
+    const workingTimeInMS = props.workingTimeInMS || 10
+    const coldStartTimeInMS = props.coldStartTimeInMS || 500
 
-        const handler = new NodejsFunction(this, 'Fun', {
-            entry: 'src/test-function.ts',
-            memorySize: 256,
-            environment: {
-                WORKING_TIME_MILLIS: workingTimeInMS.toString(),
-                COLD_START_TIME_MILLIS: coldStartTimeInMS.toString(),
-            },
-            tracing: lambda.Tracing.ACTIVE,
-        })
+    const handler = new NodejsFunction(this, 'Fun', {
+      entry: 'src/test-function.ts',
+      memorySize: 256,
+      environment: {
+        WORKING_TIME_MILLIS: workingTimeInMS.toString(),
+        COLD_START_TIME_MILLIS: coldStartTimeInMS.toString()
+      },
+      tracing: lambda.Tracing.ACTIVE
+    })
 
-        this.handler = new lambda.Version(this, 'Version', {
-            lambda: handler,
-        })
-    }
+    this.handler = new lambda.Version(this, 'Version', {
+      lambda: handler
+    })
+  }
 }

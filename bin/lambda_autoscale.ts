@@ -17,23 +17,24 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import {LambdaAutoscaleStack} from '../lib/lambda_autoscale-stack';
+import 'source-map-support/register'
+import * as cdk from 'aws-cdk-lib'
+import { LambdaAutoscaleStack } from '../lib/lambda_autoscale-stack'
 
-const app = new cdk.App();
+const app = new cdk.App()
+// eslint-disable-next-line no-new
 new LambdaAutoscaleStack(app, 'LambdaAutoscaleStack', {
-    /* If you don't specify 'env', this stack will be environment-agnostic.
+  /* If you don't specify 'env', this stack will be environment-agnostic.
      * Account/Region-dependent features and context lookups will not work,
      * but a single synthesized template can be deployed anywhere. */
 
-    /* Uncomment the next line to specialize this stack for the AWS Account
+  /* Uncomment the next line to specialize this stack for the AWS Account
      * and Region that are implied by the current CLI configuration. */
-    // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 
-    /* Uncomment the next line if you know exactly what Account and Region you
+  /* Uncomment the next line if you know exactly what Account and Region you
      * want to deploy the stack to. */
-    // env: { account: '123456789012', region: 'us-east-1' },
+  // env: { account: '123456789012', region: 'us-east-1' },
 
-    /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+})
