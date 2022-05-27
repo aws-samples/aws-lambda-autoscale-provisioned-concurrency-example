@@ -20,6 +20,8 @@
 import 'source-map-support/register'
 import * as cdk from 'aws-cdk-lib'
 import { LambdaAutoscaleStack } from '../lib/lambda_autoscale-stack'
+import { Aspects } from 'aws-cdk-lib'
+import { AwsSolutionsChecks } from 'cdk-nag'
 
 const app = new cdk.App()
 // eslint-disable-next-line no-new
@@ -38,3 +40,5 @@ new LambdaAutoscaleStack(app, 'LambdaAutoscaleStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 })
+// cdk-nag check
+Aspects.of(app).add(new AwsSolutionsChecks())

@@ -37,7 +37,7 @@ cdk deploy -O output.json
 ```
 Run load tests. Script extracts API Gateway url from output.json
 ```bash
-.\run_artillery.sh load-test-spikes.yaml
+./run_artillery.sh load-test-spikes.yaml
 ```
 Clean up
 ```bash

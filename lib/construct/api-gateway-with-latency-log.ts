@@ -22,6 +22,7 @@ import * as logs from 'aws-cdk-lib/aws-logs'
 import * as api from 'aws-cdk-lib/aws-apigateway'
 import { RemovalPolicy } from 'aws-cdk-lib'
 import { IFunction } from 'aws-cdk-lib/aws-lambda'
+import { NagSuppressions } from 'cdk-nag'
 
 export interface ApiGatewayWithLatencyLogProps {
     /**
@@ -86,7 +87,35 @@ export class ApiGatewayWithLatencyLog extends Construct {
       })
     })
 
+    // Nag suppressions
+    ApiGatewayWithLatencyLog.addCdkNagSuppressions(apiGateway)
+
     this.api = apiGateway
     this.log = logGroup
+  }
+
+  private static addCdkNagSuppressions (apiGateway: api.RestApi) {
+    NagSuppressions.addResourceSuppressions(apiGateway, [
+      {
+        id: 'AwsSolutions-IAM4',
+        reason: 'AmazonAPIGatewayPushToCloudWatchLogs managed policy uses minimal scope of requirements'
+      },
+      {
+        id: 'AwsSolutions-APIG2',
+        reason: 'skipping input validation as this is only example call and the input is not going to be read'
+      },
+      {
+        id: 'AwsSolutions-APIG4',
+        reason: 'skipping authorization as this is only example code'
+      },
+      {
+        id: 'AwsSolutions-COG4',
+        reason: 'skipping authorization as this is only example code'
+      },
+      {
+        id: 'AwsSolutions-APIG3',
+        reason: 'skipping WAF protection as this is only example code'
+      }
+    ], true)
   }
 }
